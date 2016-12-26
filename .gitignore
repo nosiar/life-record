@@ -1,0 +1,5 @@
+*.pyc
+*.pyo
+venv
+flask-uwsgi-manual.txt
+uwsgi.log
