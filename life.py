@@ -13,7 +13,7 @@ def create(confi):
     with app.app_context():
         db.create_all()
 
-app = create_app(os.getenv('TRACK_CONFIG') or 'default')
+app = create_app(os.getenv('LIFE_CONFIG') or 'default')
 
 
 @app.route("/")
