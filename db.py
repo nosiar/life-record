@@ -6,18 +6,18 @@ db = SQLAlchemy()
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
+    name = db.Column(db.String(50), unique=True)
 
     def __init__(self, name):
         self.name = name
 
     def __repr__(self):
-        return '<Category %r>' % self.name
+        return '<Category {}>'.format(self.name)
 
 
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(256))
+    name = db.Column(db.String(256), unique=True)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     category = db.relationship('Category',
                                backref=db.backref('items', lazy='dynamic'))
@@ -27,7 +27,8 @@ class Item(db.Model):
         self.category = category
 
     def __repr__(self):
-        return '<Item %r>' % self.name
+        return '<Item {}({})>'.format(self.name,
+                                      self.category.name)
 
 
 class Record(db.Model):
@@ -49,5 +50,5 @@ class Record(db.Model):
             self.end_date = end_date
 
     def __repr__(self):
-        return '<Record {!r} ({})>'.format(self.item,
-                                           self.start_date, self.end_date)
+        return '<Record {} ({}-{})>'.format(self.item.name,
+                                            self.start_date, self.end_date)
