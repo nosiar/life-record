@@ -1,13 +1,24 @@
 from flask import Flask
-app = Flask(__name__)
+from config import config
+from db import db
+import os
+
+def create_app(config_name):
+    app = Flask(__name__)
+    app.config.from_object(config[config_name])
+    db.init_app(app)
+    return app
+
+def create(confi):
+    with app.app_context():
+        db.create_all()
+
+app = create_app(os.getenv('TRACK_CONFIG') or 'default')
+
 
 @app.route("/")
 def hello():
     return "Hello World!"
-
-@app.route("/a/")
-def helloa():
-    return "Hello World!a"
 
 if __name__ == "__main__":
     app.run()
