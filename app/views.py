@@ -35,6 +35,14 @@ def get_categories():
         return jsonify(matching_results=[c.name for c in categories])
 
 
+@app.route('/items')
+def get_items():
+    q = request.args.get('q') or ''
+    with app.app_context():
+        items = Item.query.filter(Item.name.contains(q)).all()
+        return jsonify(matching_results=[i.name for i in items])
+
+
 @app.route('/show')
 @app.route('/show/<category>')
 def show(category=None):
