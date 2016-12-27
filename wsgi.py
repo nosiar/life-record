@@ -1,4 +1,4 @@
-from life import app
+from app import app
 application = app
 
 if __name__ == "__main__":
