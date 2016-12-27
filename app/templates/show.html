@@ -1,11 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-  {% for record in records %}
-  <div>
-    <span>{{ record.item.name }}</span>
-    <span>{{ record.item.category.name }}</span>
-    <span>{{ record.start_date.strftime('%Y-%m-%d') }}</span>
-  </div>
-  {% endfor %}
+  <table>
+    <tr>
+      <th>이름</th>
+      <th>카테고리</th>
+      <th>시간</th>
+    </tr>
+    {% for record in records %}
+    <tr>
+      <td>{{ record.item.name }}</td>
+      <td>{{ record.item.category.name }}</td>
+      <td>{{ record.start_date.strftime('%Y-%m-%d') }}</td>
+    </tr>
+    {% endfor %}
+  </table>
 {% endblock %}
