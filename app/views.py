@@ -1,5 +1,7 @@
 from flask import render_template
 from . import app
+from .models import Category
+
 
 @app.route('/')
 def show_all():
@@ -15,6 +17,7 @@ def show_all():
 @app.route('/<name>')
 def hello_name(name):
     return render_template('hello.html', name=name)
+
 
 if __name__ == "__main__":
     app.run()
