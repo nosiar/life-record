@@ -1,8 +1,8 @@
-<!doctype html>
-<html>
-  <body>
-    {% for record in records %}
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+  {% for record in records %}
     <div>Hello {{ record.item.name }}!</div>
-    {% endfor %}
-  </body>
-</html>
+  {% endfor %}
+{% endblock %}
