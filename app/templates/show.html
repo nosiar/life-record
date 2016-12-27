@@ -5,7 +5,7 @@
   <div>
     <span>{{ record.item.name }}</span>
     <span>{{ record.item.category.name }}</span>
-    <span>{{ record.start_date }}</span>
+    <span>{{ record.start_date.strftime('%Y-%m-%d') }}</span>
   </div>
   {% endfor %}
 {% endblock %}
