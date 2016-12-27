@@ -31,8 +31,3 @@ def show_all():
         records = [record for sublist in records for record in sublist]
 
         return render_template('show.html', records=records)
-
-
-@app.route('/<name>')
-def hello_name(name):
-    return render_template('hello.html', name=name)
