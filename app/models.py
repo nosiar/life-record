@@ -49,7 +49,7 @@ class Record(db.Model):
         self.item = item
         self.description = description
         if start_date is None:
-            start_date = datetime.utcnow()
+            start_date = datetime.now()
         self.start_date = start_date
         if end_date is not None:
             self.end_date = end_date
