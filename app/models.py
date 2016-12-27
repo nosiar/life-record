@@ -12,6 +12,13 @@ class Category(db.Model):
     def __repr__(self):
         return '<Category {}>'.format(self.name)
 
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
 
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
