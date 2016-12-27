@@ -1,4 +1,5 @@
 from flask import render_template, request, jsonify, redirect, url_for
+from sqlalchemy import desc
 from . import app, db
 from .models import Category, Item, Record
 from .forms import AddForm
@@ -36,7 +37,7 @@ def get_categories():
 
 @app.route('/show')
 @app.route('/show/<category>')
-def show_all(category=None):
+def show(category=None):
     with app.app_context():
         if category is not None:
             c = Category.query.filter_by(name=category).first()
@@ -46,7 +47,7 @@ def show_all(category=None):
             records = [item.records for item in items]
             records = [record for sublist in records for record in sublist]
         else:
-            records = Record.query.all()
+            records = Record.query.order_by(desc(Record.start_date)).all()
 
         return render_template('show.html', records=records)
 
