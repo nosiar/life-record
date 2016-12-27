@@ -43,3 +43,8 @@ def show_all():
         records = [record for sublist in records for record in sublist]
 
         return render_template('show.html', records=records)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
