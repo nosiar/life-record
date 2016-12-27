@@ -1,11 +1,17 @@
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, redirect, url_for
 from . import app
 from .models import Category
+from .forms import AddForm
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def add():
-    return render_template('add.html')
+    form = AddForm()
+    if form.validate_on_submit():
+        with app.app_context():
+            return redirect(url_for('add'))
+    message = 'error' if request.method == 'POST' else ''
+    return render_template('add.html', form=form, message=message)
 
 
 @app.route('/categories')
