@@ -1,8 +1,11 @@
-<!-- extend base layout -->
 {% extends "base.html" %}
 
 {% block content %}
   {% for record in records %}
-    <div>Hello {{ record.item.name }}!</div>
+  <div>
+    <span>{{ record.item.name }}</span>
+    <span>{{ record.item.category.name }}</span>
+    <span>{{ record.start_date }}</span>
+  </div>
   {% endfor %}
 {% endblock %}

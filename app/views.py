@@ -34,13 +34,19 @@ def get_categories():
         return jsonify(matching_results=[c.name for c in categories])
 
 
-@app.route('/all/')
-def show_all():
+@app.route('/show')
+@app.route('/show/<category>')
+def show_all(category=None):
     with app.app_context():
-        eat = Category.query.filter_by(name='처먹').first()
-        items = eat.items
-        records = [item.records for item in items]
-        records = [record for sublist in records for record in sublist]
+        if category is not None:
+            c = Category.query.filter_by(name=category).first()
+            if c is None:
+                return render_template('404.html'), 404
+            items = c.items
+            records = [item.records for item in items]
+            records = [record for sublist in records for record in sublist]
+        else:
+            records = Record.query.all()
 
         return render_template('show.html', records=records)
 
