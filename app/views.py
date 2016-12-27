@@ -1,6 +1,6 @@
 from flask import render_template, request, jsonify, redirect, url_for
-from . import app
-from .models import Category
+from . import app, db
+from .models import Category, Item, Record
 from .forms import AddForm
 
 
@@ -9,6 +9,18 @@ def add():
     form = AddForm()
     if form.validate_on_submit():
         with app.app_context():
+            c = Category.query.filter_by(name=form.category.data).first()
+            if c is None:
+                c = Category(form.category.data)
+                db.session.add(c)
+            i = Item.query.filter_by(name=form.item.data).first()
+            if i is None:
+                i = Item(form.item.data, c)
+                db.session.add(i)
+            r = Record(i, '', form.start.data)
+            db.session.add(r)
+            db.session.commit()
+
             return redirect(url_for('add'))
     message = 'error' if request.method == 'POST' else ''
     return render_template('add.html', form=form, message=message)
