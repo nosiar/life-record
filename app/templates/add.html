@@ -1,7 +1,16 @@
 {% extends "base.html" %}
 
-{% block script %}
+{% block head %}
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=WuHk4eJpsqDQ5tLWjYbi"></script>
+<script type="text/javascript">
 $(function() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(onSuccessGeolocation, onErrorGeolocation);
+  } else {
+    var center = map.getCenter();
+    infowindow.setContent('<div style="padding:20px;"><h5 style="margin-bottom:5px;color:#f00;">Geolocation not supported</h5>'+ "latitude: "+ center.lat() +"<br />longitude: "+ center.lng() +'</div>');
+    infowindow.open(map, center);
+  }
   $("#item").autocomplete({
     source: function(request, response){
       $.getJSON("{{url_for('get_items')}}",{
@@ -28,6 +37,7 @@ $(function() {
     }
   });
 });
+</script>
 {% endblock %}
 
 {% block content %}
@@ -39,4 +49,6 @@ $(function() {
   <input type="submit">
 </form>
 <div id="log">{{ message }}</div>
+<div id="map" style="width:100%;height:400px;"></div>
+<script type="text/javascript" src="{{ url_for('static', filename='js/map.js') }}"></script>
 {% endblock %}
