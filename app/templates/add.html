@@ -5,14 +5,6 @@
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=WuHk4eJpsqDQ5tLWjYbi"></script>
 <script type="text/javascript">
 $(function() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(onSuccessGeolocation, onErrorGeolocation);
-  } else {
-    var center = map.getCenter();
-    infowindow.setContent('<div style="padding:20px;"><h5 style="margin-bottom:5px;color:#f00;">Geolocation not supported</h5>'+ "latitude: "+ center.lat() +"<br />longitude: "+ center.lng() +'</div>');
-    infowindow.open(map, center);
-  }
-
   autocomplete("#item", "{{url_for('get_items')}}");
   autocomplete("#category", "{{url_for('get_categories')}}");
 });
