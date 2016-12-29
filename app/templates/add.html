@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block head %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/autocomplete.js') }}"></script>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=WuHk4eJpsqDQ5tLWjYbi"></script>
 <script type="text/javascript">
 $(function() {
@@ -11,31 +12,9 @@ $(function() {
     infowindow.setContent('<div style="padding:20px;"><h5 style="margin-bottom:5px;color:#f00;">Geolocation not supported</h5>'+ "latitude: "+ center.lat() +"<br />longitude: "+ center.lng() +'</div>');
     infowindow.open(map, center);
   }
-  $("#item").autocomplete({
-    source: function(request, response){
-      $.getJSON("{{url_for('get_items')}}",{
-        q: request.term,
-      }, function(data) {
-        response(data.matching_results);
-      });
-    },
-    minLength: 1,
-    select: function(event, ui){
-      //$("#log").text(ui.item.value);
-    }
-  });
-  $("#category").autocomplete({
-    source: function(request, response){
-      $.getJSON("{{url_for('get_categories')}}",{
-        q: request.term,
-      }, function(data) {
-        response(data.matching_results);
-      });
-    },
-    minLength: 1,
-    select: function(event, ui){
-    }
-  });
+
+  autocomplete("#item", "{{url_for('get_items')}}");
+  autocomplete("#category", "{{url_for('get_categories')}}");
 });
 </script>
 {% endblock %}
