@@ -10,5 +10,5 @@ class AddForm(FlaskForm):
     category = StringField('category', validators=[DataRequired()])
     start = DateTimeLocalField('start',
                                format='%Y-%m-%dT%H:%M',
-                               default=datetime.now(),
+                               default=datetime.now,
                                validators=[Optional()])
