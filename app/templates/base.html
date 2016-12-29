@@ -24,7 +24,22 @@
   </head>
   <body>
     <div class="container-fluid">
-      {% block content %}{% endblock %}
+      <!-- navbar -->
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header pull-left">
+            <a class="navbar-brand" href="#">Log Everything</a>
+          </div>
+          <div class="navbar-header pull-right">
+            <ul class="nav pull-left">
+              <li class="pull-left"><a href="{{url_for('add')}}">Add</a></li>
+              <li class="pull-left"><a href="{{url_for('show')}}">Show</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- /navbar -->
+      <!-- content -->{% block content %}{% endblock %}      <!-- /content -->
     </div>
   </body>
 </html>

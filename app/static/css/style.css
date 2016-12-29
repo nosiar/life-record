@@ -1,3 +1,7 @@
+body {
+  padding-top: 60px;
+}
+
 #start {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -7,4 +11,8 @@
   margin-top: 20px;
   width: auto;
   height: 400px;
+}
+
+.nav>li {
+  margin-top: 5px;
 }
