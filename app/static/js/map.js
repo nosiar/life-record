@@ -1,12 +1,21 @@
-var map = new naver.maps.Map('map', {
+$(function() {
+  var map = new naver.maps.Map('map', {
     center: new naver.maps.LatLng(37.5666805, 126.9784147),
     zoom: 5,
     mapTypeId: naver.maps.MapTypeId.TERRAIN
-});
+  });
 
-var infowindow = new naver.maps.InfoWindow();
+  var infowindow = new naver.maps.InfoWindow();
 
-function onSuccessGeolocation(position) {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(onSuccessGeolocation, onErrorGeolocation);
+  } else {
+    var center = map.getCenter();
+    infowindow.setContent('<div style="padding:20px;"><h5 style="margin-bottom:5px;color:#f00;">Geolocation not supported</h5>'+ "latitude: "+ center.lat() +"<br />longitude: "+ center.lng() +'</div>');
+    infowindow.open(map, center);
+  }
+
+  function onSuccessGeolocation(position) {
     var location = new naver.maps.LatLng(position.coords.latitude,
                                          position.coords.longitude);
 
@@ -18,21 +27,14 @@ function onSuccessGeolocation(position) {
         'longitude: '+ location.lng() +'</div>');
 
     infowindow.open(map, location);
-}
+  }
 
-function onErrorGeolocation() {
+  function onErrorGeolocation() {
     var center = map.getCenter();
 
     infowindow.setContent('<div style="padding:20px;">' +
         '<h5 style="margin-bottom:5px;color:#f00;">Geolocation failed!</h5>'+ "latitude: "+ center.lat() +"<br />longitude: "+ center.lng() +'</div>');
 
     infowindow.open(map, center);
-}
-
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(onSuccessGeolocation, onErrorGeolocation);
-} else {
-  var center = map.getCenter();
-  infowindow.setContent('<div style="padding:20px;"><h5 style="margin-bottom:5px;color:#f00;">Geolocation not supported</h5>'+ "latitude: "+ center.lat() +"<br />longitude: "+ center.lng() +'</div>');
-  infowindow.open(map, center);
-}
+  }
+});

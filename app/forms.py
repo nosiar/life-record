@@ -6,9 +6,9 @@ from datetime import datetime
 
 
 class AddForm(FlaskForm):
-    item = StringField('item', validators=[DataRequired()])
-    category = StringField('category', validators=[DataRequired()])
-    start = DateTimeLocalField('start',
+    item = StringField('Item', validators=[DataRequired()])
+    category = StringField('Category', validators=[DataRequired()])
+    start = DateTimeLocalField('Start',
                                format='%Y-%m-%dT%H:%M',
                                default=datetime.now,
                                validators=[Optional()])

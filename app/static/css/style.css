@@ -1,0 +1,10 @@
+#start {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+#map {
+  margin-top: 20px;
+  width: auto;
+  height: 400px;
+}
