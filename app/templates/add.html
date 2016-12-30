@@ -13,7 +13,7 @@ $(function() {
 {% endblock %}
 
 {% block content %}
-<form action="" method="POST">
+<form action="{{ url_for('add') }}" method="POST">
   {{ form.hidden_tag() }}
   <div class="form-group">
     {{ form.item.label(class_="sr-only") }}

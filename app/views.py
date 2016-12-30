@@ -2,7 +2,7 @@ from flask import render_template, request, jsonify, redirect, url_for
 from sqlalchemy import desc
 from . import app, db
 from .models import Category, Item, Record
-from .forms import AddForm
+from .forms import AddForm, ActForm
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -25,6 +25,18 @@ def add():
             return redirect(url_for('add'))
     message = 'error' if request.method == 'POST' else ''
     return render_template('add.html', form=form, message=message)
+
+
+@app.route('/act', methods=['GET', 'POST'])
+def act():
+    form = ActForm()
+    print(request.method=='POST')
+    if form.validate_on_submit():
+        print('aasdf')
+        print(form.item.data)
+        return redirect(url_for('act'))
+    print('bbbbb')
+    return render_template('act.html', form=form)
 
 
 @app.route('/categories')
