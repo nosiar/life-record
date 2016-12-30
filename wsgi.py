@@ -1,3 +1,5 @@
+#!venv/bin/python
+
 from app import app
 application = app
 
