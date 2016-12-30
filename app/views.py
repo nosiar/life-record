@@ -6,7 +6,12 @@ from .models import Category, Item, Record
 from .forms import AddForm, ActForm
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
+def index():
+    return add()
+
+
+@app.route('/add', methods=['GET', 'POST'])
 def add():
     form = AddForm()
     if form.validate_on_submit():
