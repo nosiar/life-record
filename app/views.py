@@ -63,9 +63,10 @@ def show(category=None):
             c = Category.query.filter_by(name=category).first()
             if c is None:
                 return render_template('404.html'), 404
-            items = c.items
-            records = [item.records for item in items]
-            records = [record for sublist in records for record in sublist]
+            records = (
+                Record.query.order_by(desc(Record.start_date)).join(Item)
+                .filter(Item.category_id == c.id).all()
+            )
         else:
             records = Record.query.order_by(desc(Record.start_date)).all()
 
