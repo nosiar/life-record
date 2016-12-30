@@ -33,17 +33,27 @@ def act_form_validate(form, running, request):
     return False
 
 
+def get_name(choices, value):
+    idx = [x[0] for x in choices].index(value)
+    return choices[idx][1]
+
+
+def get_value(choices, name):
+    idx = [x[1] for x in choices].index(name)
+    return choices[idx][0]
+
+
 @app.route('/act', methods=['GET', 'POST'])
 def act():
     form = ActForm()
 
-    choices = [c[0] for c in form.category.choices]
+    names = [c[1] for c in form.category.choices]
     r = (
         Record.query.order_by(desc(Record.start_date)).join(Item)
-        .filter(Item.name.in_(choices)).first()
+        .filter(Item.name.in_(names)).first()
     )
     if r is not None and r.end_date is None:
-        running = r.item.name
+        running = get_value(form.category.choices, r.item.name)
         start_date = r.start_date
     else:
         running = ''
@@ -53,13 +63,15 @@ def act():
         if running != '':
             r.end_date = datetime.now()
         else:
-            c = Category.query.filter_by(name=form.category.data).first()
+            name = get_name(form.category.choices, form.category.data)
+
+            c = Category.query.filter_by(name=name).first()
             if c is None:
-                c = Category(form.category.data)
+                c = Category(name)
                 db.session.add(c)
-            i = Item.query.filter_by(name=form.category.data).first()
+            i = Item.query.filter_by(name=name).first()
             if i is None:
-                i = Item(form.category.data, c)
+                i = Item(name, c)
                 db.session.add(i)
             r = Record(i, '', datetime.now())
             db.session.add(r)
