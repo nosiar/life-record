@@ -15,7 +15,7 @@ class AddForm(FlaskForm):
 
 
 class ActForm(FlaskForm):
-    item = RadioField('label',
-                      choices=[('piano', '피아노'), ('workout', '운동')],
-                      default='piano',
-                      validators=[InputRequired()])
+    category = RadioField('label',
+                          choices=[('piano', '피아노'), ('workout', '운동')],
+                          default='piano',
+                          validators=[InputRequired()])

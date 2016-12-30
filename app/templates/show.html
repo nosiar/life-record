@@ -5,13 +5,19 @@
     <tr>
       <th>이름</th>
       <th>카테고리</th>
-      <th>시간</th>
+      <th>날짜</th>
+      <th>기간</th>
     </tr>
     {% for record in records %}
     <tr>
       <td>{{ record.item.name }}</td>
       <td>{{ record.item.category.name }}</td>
-      <td>{{ record.start_date.strftime('%Y-%m-%d') }}</td>
+      <td>{{ record.start_date.strftime('%y-%m-%d') }}</td>
+      <td>{% if record.end_date is not none %}
+          {% set s = (record.end_date - record.start_date).seconds %}
+          {{ '{}:{:02d}'.format(s//3600, s%3600//60) }}
+          {% endif %}
+      </td>
     </tr>
     {% endfor %}
   </table>
