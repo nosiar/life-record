@@ -11,7 +11,7 @@
     {% for record in records %}
     <tr>
       <td>{{ record.item.name }}</td>
-      <td>{{ record.item.category.name }}</td>
+      <td><a href="{{ url_for('show') }}/{{ record.item.category.name }}">{{ record.item.category.name }}</a></td>
       <td>{{ record.start_date.strftime('%y-%m-%d') }}</td>
       <td>{% if record.end_date is not none %}
           {% set s = (record.end_date - record.start_date).seconds %}
