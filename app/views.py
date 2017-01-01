@@ -117,6 +117,23 @@ def show(category=None):
     return render_template('show.html', records=records)
 
 
+@app.route('/delete/<id>')
+def delete(id):
+    redirect_to = request.referrer or url_for('index')
+
+    try:
+        id = int(id)
+    except ValueError:
+        return redirect(redirect_to)
+
+    r = Record.query.get(id)
+    if r is not None:
+        db.session.delete(r)
+        db.session.commit()
+
+    return redirect(redirect_to)
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
