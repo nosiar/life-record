@@ -5,7 +5,7 @@
   $(function() {
     $(".record-sub").hide();
     $(".record").click(function(){
-      $(this).next().slideToggle();
+      $(this).next().toggle();
     })
     $(".category").click(function(e){
       e.stopPropagation();
