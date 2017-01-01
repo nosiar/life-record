@@ -48,9 +48,7 @@ class Record(db.Model):
     def __init__(self, item, description, start_date=None, end_date=None):
         self.item = item
         self.description = description
-        if start_date is None:
-            start_date = datetime.now()
-        self.start_date = start_date
+        self.start_date = start_date or datetime.now()
         if end_date is not None:
             self.end_date = end_date
 
