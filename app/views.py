@@ -128,7 +128,16 @@ def delete(id):
 
     r = Record.query.get(id)
     if r is not None:
+        i = r.item
         db.session.delete(r)
+
+        if not i.records.all():
+            c = i.category
+            db.session.delete(i)
+
+            if not c.items.all():
+                db.session.delete(c)
+
         db.session.commit()
 
     return redirect(redirect_to)
