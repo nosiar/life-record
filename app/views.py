@@ -86,14 +86,14 @@ def act():
                            running=running, start_date=start_date)
 
 
-@app.route('/categories')
+@app.route('/json/categories')
 def get_categories():
     q = request.args.get('q') or ''
     categories = Category.query.filter(Category.name.contains(q)).all()
     return jsonify(matching_results=[c.name for c in categories])
 
 
-@app.route('/items')
+@app.route('/json/items')
 def get_items():
     q = request.args.get('q') or ''
     items = Item.query.filter(Item.name.contains(q)).all()
@@ -101,8 +101,9 @@ def get_items():
 
 
 @app.route('/show')
-@app.route('/show/<category>')
-def show(category=None):
+@app.route('/show/i/<item>')
+@app.route('/show/c/<category>')
+def show(item=None, category=None):
     if category is not None:
         c = Category.query.filter_by(name=category).first()
         if c is None:
@@ -110,6 +111,14 @@ def show(category=None):
         records = (
             Record.query.order_by(desc(Record.start_date)).join(Item)
             .filter(Item.category_id == c.id).all()
+        )
+    elif item is not None:
+        i = Item.query.filter_by(name=item).first()
+        if i is None:
+            return render_template('404.html'), 404
+        records = (
+            Record.query.order_by(desc(Record.start_date))
+            .filter_by(item_id=i.id).all()
         )
     else:
         records = Record.query.order_by(desc(Record.start_date)).all()

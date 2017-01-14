@@ -7,6 +7,9 @@
     $(".record").click(function(){
       $(this).next().toggle();
     })
+    $(".item>a").click(function(e){
+      e.stopPropagation();
+    });
     $(".category>a").click(function(e){
       e.stopPropagation();
     });
@@ -23,7 +26,7 @@
     </tr>
     {% for record in records %}
     <tr class="record">
-      <td>{{ record.item.name }}</td>
+      <td class="item"><a href="{{ url_for('show', item=record.item.name) }}">{{ record.item.name }}</a></td>
       <td class="category"><a href="{{ url_for('show', category=record.item.category.name) }}">{{ record.item.category.name }}</a></td>
       <td>{{ record.start_date.strftime('%y-%m-%d') }}</td>
       <td>{% if record.end_date is not none %}
