@@ -100,9 +100,9 @@ def get_items():
     return jsonify(matching_results=[i.name for i in items])
 
 
-@app.route('/show')
-@app.route('/show/i/<item>')
-@app.route('/show/c/<category>')
+@app.route('/all')
+@app.route('/i/<item>')
+@app.route('/c/<category>')
 def show(item=None, category=None):
     if category is not None:
         c = Category.query.filter_by(name=category).first()
