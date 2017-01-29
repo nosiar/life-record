@@ -6,3 +6,4 @@ uwsgi.log
 *.db
 *.pem
 instance
+*.log
