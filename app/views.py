@@ -152,6 +152,12 @@ def delete(id):
     return redirect(redirect_to)
 
 
+@app.route('/category')
+def category():
+    categories = Category.query.all()
+    return render_template('category.html', categories=categories)
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
