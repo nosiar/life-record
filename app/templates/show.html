@@ -29,7 +29,7 @@
     <tr class="record">
       <td class="item"><a href="{{ url_for('show', item=record.item.name) }}">{{ record.item.name }}</a></td>
       <td class="category"><a href="{{ url_for('show', category=record.item.category.name) }}">{{ record.item.category.name }}</a></td>
-      <td>{{ record.start_date.strftime('%y-%m-%d') }} {{ dic[record.start_date.weekday()] }}</td>
+      <td><a href="{{ url_for('show', date=record.start_date.strftime('%Y-%m-%d')) }}">{{ record.start_date.strftime('%y-%m-%d') }} {{ dic[record.start_date.weekday()] }}</a></td>
       <td>{% if record.end_date is not none %}
           {% set s = (record.end_date - record.start_date).seconds %}
           {{ '{}:{:02d}'.format(s//3600, s%3600//60) }}

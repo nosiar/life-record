@@ -1,6 +1,6 @@
 from flask import render_template, request, jsonify, redirect, url_for
 from sqlalchemy import desc
-from datetime import datetime
+from datetime import datetime, timedelta
 from . import app, db
 from .models import Category, Item, Record
 from .forms import AddForm, ActForm
@@ -103,7 +103,8 @@ def get_items():
 @app.route('/all')
 @app.route('/i/<item>')
 @app.route('/c/<category>')
-def show(item=None, category=None):
+@app.route('/d/<date>')
+def show(item=None, category=None, date=None):
     if category is not None:
         c = Category.query.filter_by(name=category).first()
         if c is None:
@@ -119,6 +120,13 @@ def show(item=None, category=None):
         records = (
             Record.query.order_by(desc(Record.start_date))
             .filter_by(item_id=i.id).all()
+        )
+    elif date is not None:
+        s = datetime.strptime(date, '%Y-%m-%d')
+        e = s + timedelta(days=1)
+        records = (
+            Record.query.order_by(desc(Record.start_date))
+            .filter(Record.start_date.between(s, e)).all()
         )
     else:
         records = Record.query.order_by(desc(Record.start_date)).all()
