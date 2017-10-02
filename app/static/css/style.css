@@ -20,3 +20,7 @@ body {
 #act-buttons {
   margin-top: 10px;
 }
+
+.item a {
+  word-break: break-all;
+}
